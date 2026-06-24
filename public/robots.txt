@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://recograscolombia.com/sitemap-index.xml

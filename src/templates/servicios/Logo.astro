@@ -1,0 +1,24 @@
+---
+interface Props {
+  /** 'dark' para fondos claros (texto azul), 'light' para fondos oscuros (texto blanco). */
+  tone?: 'dark' | 'light';
+  wordmark?: boolean;
+  class?: string;
+}
+
+const { tone = 'dark', wordmark = true, class: className = '' } = Astro.props;
+const wordmarkColor = tone === 'light' ? 'text-white' : 'text-brand-900';
+---
+
+<span class={`inline-flex items-center gap-2.5 ${className}`}>
+  {/* Insignia de marca: gota dorada sobre azul (idéntica al favicon) */}
+  <span class="relative inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-600 shadow-sm">
+    <svg viewBox="0 0 64 64" class="h-6 w-6" aria-hidden="true" focusable="false">
+      <path d="M32 13 C40 25, 46 32, 46 40 a14 14 0 0 1 -28 0 C18 32, 24 25, 32 13 Z" fill="#e2a832" />
+      <path d="M27 39 a5 5 0 0 0 5 5" fill="none" stroke="#ffffff" stroke-opacity="0.55" stroke-width="2.4" stroke-linecap="round" />
+    </svg>
+  </span>
+  {wordmark && (
+    <span class={`text-base sm:text-lg font-black tracking-tight ${wordmarkColor}`}>Recogras</span>
+  )}
+</span>

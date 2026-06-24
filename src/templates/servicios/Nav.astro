@@ -1,0 +1,40 @@
+---
+import type { ServiciosData } from './data';
+
+import Icon from '../../components/Icon.astro';
+import Logo from './Logo.astro';
+interface Props {
+  data: ServiciosData;
+}
+
+const { data } = Astro.props;
+---
+
+<header class="fixed inset-x-0 top-0 z-40 border-b border-slate-200/60 bg-white/80 backdrop-blur-xl supports-[backdrop-filter]:bg-white/70">
+  <nav aria-label="Principal" class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex h-16 items-center justify-between gap-4">
+      <a href="#top" aria-label={data.brand.name}>
+        <Logo />
+      </a>
+
+      <div class="hidden md:flex items-center gap-7">
+        {data.nav.map((item) => (
+          <a href={item.href} class="text-sm font-semibold text-slate-600 hover:text-brand-700 transition-colors">
+            {item.label}
+          </a>
+        ))}
+      </div>
+
+      {data.navCta && (
+        <a
+          href={data.navCta.href}
+          class="inline-flex items-center gap-1.5 rounded-lg bg-brand-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-brand-700 transition-colors"
+        >
+          <Icon name="message-circle" class="w-3.5 h-3.5" />
+          <span class="hidden sm:inline">{data.navCta.label}</span>
+          <span class="sm:hidden">Solicitar</span>
+        </a>
+      )}
+    </div>
+  </nav>
+</header>

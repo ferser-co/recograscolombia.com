@@ -1,0 +1,24 @@
+{
+  "name": "recograscolombia.com",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "gen:og": "node scripts/gen-og.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.2.1",
+    "@tailwindcss/vite": "^4.1.13",
+    "astro": "^5.14.1",
+    "lucide-static": "^0.469.0",
+    "tailwindcss": "^4.1.13"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.2"
+  }
+}

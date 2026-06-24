@@ -1,0 +1,122 @@
+---
+import type { ServiciosData } from './data';
+
+import Icon from '../../components/Icon.astro';
+interface Props {
+  data: ServiciosData;
+}
+
+const { data } = Astro.props;
+---
+
+<section id="contacto" class="py-20 sm:py-28 bg-slate-50">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl mb-14 reveal">
+      <p class="mb-3 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-brand-700">
+        <span class="h-px w-8 bg-brand-700"></span>
+        Contacto
+      </p>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-900 mb-4">
+        {data.contact.title}
+      </h2>
+      <p class="text-base sm:text-lg text-slate-600">{data.contact.subtitle}</p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-8 items-stretch">
+      {/* Tarjetas de contacto (2×2, misma altura que el mapa) */}
+      <div class="reveal grid sm:grid-cols-2 sm:auto-rows-fr gap-4 h-full">
+        <a
+          href={data.contact.whatsappLink}
+          class="group flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-6 hover:border-brand-600/30 hover:shadow-md transition-all"
+        >
+          <div class="w-11 h-11 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center group-hover:bg-brand-600 group-hover:text-white transition-colors">
+            <Icon name="message-circle" class="w-5 h-5" />
+          </div>
+          <div class="min-w-0">
+            <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-0.5">WhatsApp</p>
+            <p class="text-base font-semibold text-slate-900">{data.contact.whatsapp}</p>
+            <p class="text-sm text-brand-700 font-semibold mt-1">Solicitar recolección →</p>
+          </div>
+        </a>
+
+        <a
+          href={`mailto:${data.contact.email}`}
+          class="group flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-6 hover:border-brand-600/30 hover:shadow-md transition-all"
+        >
+          <div class="w-11 h-11 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center group-hover:bg-brand-600 group-hover:text-white transition-colors">
+            <Icon name="mail" class="w-5 h-5" />
+          </div>
+          <div class="min-w-0">
+            <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-0.5">Correo</p>
+            <p class="text-sm font-semibold text-slate-900 break-words">{data.contact.email}</p>
+          </div>
+        </a>
+
+        <div class="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-6">
+          <div class="w-11 h-11 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center">
+            <Icon name="truck" class="w-5 h-5" />
+          </div>
+          <div class="min-w-0">
+            <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-0.5">Cobertura</p>
+            <p class="text-sm font-semibold text-slate-900">{data.contact.coverage}</p>
+          </div>
+        </div>
+
+        <a
+          href={data.contact.mapUrl}
+          target="_blank"
+          rel="noopener"
+          class="group flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-6 hover:border-brand-600/30 hover:shadow-md transition-all"
+        >
+          <div class="w-11 h-11 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center group-hover:bg-brand-600 group-hover:text-white transition-colors">
+            <Icon name="map-pin" class="w-5 h-5" />
+          </div>
+          <div class="min-w-0">
+            <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-0.5">Ubicación</p>
+            <p class="text-sm font-semibold text-slate-900">{data.contact.address}</p>
+            <p class="text-sm text-brand-700 font-semibold mt-1">Cómo llegar →</p>
+          </div>
+        </a>
+      </div>
+
+      {/* Mapa de Google — facade: solo carga al hacer clic */}
+      <div class="reveal overflow-hidden rounded-2xl border border-slate-200 shadow-sm h-full" style="transition-delay: 100ms;">
+        <button
+          type="button"
+          id="map-facade"
+          data-src={data.contact.mapEmbedUrl}
+          data-title={`Ubicación de ${data.brand.name} en Google Maps`}
+          aria-label="Cargar mapa interactivo de Google"
+          class="group flex h-full min-h-[460px] w-full flex-col items-center justify-center gap-3 bg-brand-50 px-6 text-center transition-colors hover:bg-brand-100"
+        >
+          <span class="flex h-14 w-14 items-center justify-center rounded-full bg-brand-600 text-white shadow-sm">
+            <Icon name="map-pin" class="w-7 h-7" />
+          </span>
+          <span class="text-lg font-bold text-slate-900">Ver ubicación en el mapa</span>
+          <span class="max-w-xs text-sm text-slate-500">{data.contact.address}</span>
+          <span class="mt-1 inline-flex items-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white group-hover:bg-brand-700 transition-colors">
+            <Icon name="map" class="w-4 h-4" />
+            Cargar mapa
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script is:inline>
+    (function () {
+      var f = document.getElementById('map-facade');
+      if (!f) return;
+      f.addEventListener('click', function () {
+        var ifr = document.createElement('iframe');
+        ifr.src = f.dataset.src;
+        ifr.title = f.dataset.title;
+        ifr.loading = 'lazy';
+        ifr.referrerPolicy = 'no-referrer-when-downgrade';
+        ifr.allowFullscreen = true;
+        ifr.style.cssText = 'border:0;width:100%;height:100%;min-height:460px;display:block';
+        f.replaceWith(ifr);
+      });
+    })();
+  </script>
+</section>

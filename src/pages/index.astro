@@ -1,0 +1,71 @@
+---
+import Layout from '../templates/servicios/Layout.astro';
+import Nav from '../templates/servicios/Nav.astro';
+import Hero from '../templates/servicios/Hero.astro';
+import Services from '../templates/servicios/Services.astro';
+import About from '../templates/servicios/About.astro';
+import Certification from '../templates/servicios/Certification.astro';
+import CtaBand from '../templates/servicios/CtaBand.astro';
+import Contact from '../templates/servicios/Contact.astro';
+import Footer from '../templates/servicios/Footer.astro';
+import { data } from '../templates/servicios/data';
+
+const title = `${data.brand.name} — ${data.brand.tagline}`;
+const description = data.hero.subtitle;
+const phone = data.contact.phone ?? data.contact.whatsapp;
+const ogImage = Astro.site ? new URL('/og.png', Astro.site).toString() : '/og.png';
+const siteUrl = Astro.site ? Astro.site.toString() : 'https://recograscolombia.com';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  '@id': `${siteUrl}#business`,
+  name: data.brand.name,
+  description: data.footer.description,
+  slogan: data.hero.title,
+  url: siteUrl,
+  image: ogImage,
+  email: data.contact.email,
+  telephone: phone,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: data.contact.address,
+    addressLocality: 'Cartagena de Indias',
+    addressRegion: 'Bolívar',
+    addressCountry: 'CO',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: data.contact.geo.lat,
+    longitude: data.contact.geo.lng,
+  },
+  hasMap: data.contact.mapUrl,
+  areaServed: { '@type': 'AdministrativeArea', name: 'Bolívar, Colombia' },
+  knowsAbout: [
+    'Recolección de aceite de cocina usado',
+    'Recolección de trampa grasa',
+    'Certificado de disposición final',
+    'Economía circular',
+  ],
+};
+---
+
+<Layout title={title} description={description}>
+  <Fragment slot="head">
+    <meta name="keywords" content="recolección de aceite usado, aceite de cocina usado, trampa grasa, lodo graso, certificado de disposición final, Cartagena, economía circular, gestión de residuos" />
+    <meta name="author" content="Recogras" />
+    <meta name="geo.region" content="CO-BOL" />
+    <meta name="geo.placename" content="Cartagena de Indias" />
+    <meta name="geo.position" content={`${data.contact.geo.lat};${data.contact.geo.lng}`} />
+    <meta name="ICBM" content={`${data.contact.geo.lat}, ${data.contact.geo.lng}`} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+  </Fragment>
+  <Nav data={data} />
+  <Hero data={data} />
+  <Services data={data} />
+  <About data={data} />
+  <Certification data={data} />
+  <CtaBand data={data} />
+  <Contact data={data} />
+  <Footer data={data} />
+</Layout>

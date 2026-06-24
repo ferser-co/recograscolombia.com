@@ -1,0 +1,110 @@
+---
+import type { ServiciosData } from './data';
+
+import Icon from '../../components/Icon.astro';
+interface Props {
+  data: ServiciosData;
+}
+
+const { data } = Astro.props;
+---
+
+<section id="top" class="relative overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-28">
+  {/* Fondo y motivos de marca */}
+  <div class="absolute inset-0 -z-10 bg-gradient-to-br from-brand-50 via-white to-gold-50/50"></div>
+  <div class="absolute top-20 right-[-100px] -z-10 w-[500px] h-[500px] rounded-full bg-brand-100/50 blur-3xl"></div>
+  <div class="absolute bottom-[-100px] left-[-50px] -z-10 w-[400px] h-[400px] rounded-full bg-gold-100/50 blur-3xl"></div>
+  <Icon name="earth" class="absolute -z-10 top-24 left-[-60px] w-72 h-72 text-teal-600/10" />
+  <Icon name="recycle" class="absolute -z-10 bottom-10 right-10 w-40 h-40 text-gold-500/10 hidden lg:block" />
+
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-16 items-center">
+      <div>
+        <p class="mb-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-brand-700">
+          <span class="h-px w-8 bg-brand-700"></span>
+          {data.hero.eyebrow}
+        </p>
+
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.05] tracking-tight text-slate-900 mb-6">
+          {data.hero.title}
+        </h1>
+
+        <p class="text-lg sm:text-xl text-slate-600 leading-relaxed mb-10 max-w-xl">
+          {data.hero.subtitle}
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-3">
+          <a
+            href={data.hero.primaryCta.href}
+            class="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-7 py-4 text-base font-semibold text-white shadow-lg shadow-brand-600/25 hover:bg-brand-700 hover:shadow-xl hover:shadow-brand-600/30 transition-all"
+          >
+            <Icon name="message-circle" class="w-5 h-5" />
+            {data.hero.primaryCta.label}
+          </a>
+          {data.hero.secondaryCta && (
+            <a
+              href={data.hero.secondaryCta.href}
+              class="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-slate-200 bg-white px-7 py-4 text-base font-semibold text-slate-700 hover:border-brand-300 hover:bg-brand-50 transition-all"
+            >
+              {data.hero.secondaryCta.label}
+            </a>
+          )}
+        </div>
+      </div>
+
+      <div class="reveal hidden lg:block" style="transition-delay: 150ms;">
+        <div class="relative">
+          {/* Tarjeta de certificado */}
+          <div class="rounded-2xl bg-white border border-slate-200 shadow-2xl p-6 transform rotate-1">
+            <div class="flex items-center gap-3 mb-5 pb-4 border-b border-slate-100">
+              <div class="h-11 w-11 rounded-full bg-brand-600 text-white flex items-center justify-center">
+                <Icon name="badge-check" class="w-6 h-6" />
+              </div>
+              <div>
+                <p class="text-xs text-slate-400 uppercase tracking-wider font-semibold">Certificado de disposición final</p>
+                <p class="text-sm font-bold text-slate-900">Recogras · Certificación electrónica</p>
+              </div>
+            </div>
+            <div class="space-y-3">
+              <div class="flex justify-between text-sm">
+                <span class="text-slate-500">Residuo</span>
+                <span class="font-semibold text-slate-900">Aceite de cocina usado</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-slate-500">Cantidad</span>
+                <span class="font-semibold text-slate-900">120 L</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-slate-500">Disposición</span>
+                <span class="font-semibold text-slate-900">Economía circular</span>
+              </div>
+              <div class="h-px bg-slate-100 my-1"></div>
+              <div class="flex justify-between text-sm">
+                <span class="text-slate-500">Emitido</span>
+                <span class="font-semibold text-slate-900">Recogras Colombia</span>
+              </div>
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-100 flex items-center justify-between">
+              <p class="text-xs text-slate-500">Enviado al correo del cliente</p>
+              <span class="inline-flex items-center gap-1 rounded-md bg-teal-50 px-2 py-1 text-xs font-bold text-teal-700">
+                <span class="w-1.5 h-1.5 rounded-full bg-teal-500"></span>
+                Verificado
+              </span>
+            </div>
+          </div>
+
+          {/* Tarjeta flotante de acento */}
+          <div class="absolute -bottom-6 -left-6 bg-gold-500 rounded-2xl p-5 shadow-xl transform -rotate-2">
+            <div class="flex items-center gap-2">
+              <Icon name="recycle" class="w-8 h-8 text-brand-900" />
+              <div>
+                <p class="text-lg font-black text-brand-900 leading-none">Economía</p>
+                <p class="text-lg font-black text-brand-900 leading-none">circular</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
