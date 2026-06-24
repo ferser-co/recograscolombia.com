@@ -59,6 +59,16 @@ export interface ServiciosData {
     subtitle: string;
     benefits: BenefitItem[];
   };
+  authorization: {
+    eyebrow: string;
+    title: string;
+    text: string;
+    facts: string[];
+    pdfLabel: string;
+    pdfUrl: string;
+    verifyLabel: string;
+    verifyUrl: string;
+  };
   cta: {
     title: string;
     subtitle: string;
@@ -256,6 +266,22 @@ export const data: ServiciosData = {
           'Seguimiento de cada recolección, desde el origen hasta su disposición final.',
       },
     ],
+  },
+  authorization: {
+    eyebrow: 'Autorización oficial',
+    title: 'Gestor de Aceites de Cocina Usado autorizado por el EPA-Cartagena',
+    text: 'Recogras está inscrita ante el Establecimiento Público Ambiental (EPA-Cartagena) como gestor de Aceites de Cocina Usado (ACU) desde el 26 de mayo de 2025, conforme a la Resolución 0316 de 2018. Operamos con los permisos y el respaldo de la autoridad ambiental.',
+    facts: [
+      'Oficio EPA-OFI-002903-2025',
+      'Inscritos desde el 26 de mayo de 2025',
+      'Resolución 0316 de 2018',
+      'Capacidad autorizada: 10.000 kg/mes',
+    ],
+    pdfLabel: 'Descargar certificado',
+    pdfUrl: '/docs/certificado-epa-recogras.pdf',
+    verifyLabel: 'Verificar autenticidad',
+    verifyUrl:
+      'https://sigob.cartagena.gov.co/SeguimientoCorrespondencia?ID=tF7KjaGPrzZmwF0bt7GhVA==',
   },
   cta: {
     title: '¿Listo para gestionar tus residuos de forma responsable?',

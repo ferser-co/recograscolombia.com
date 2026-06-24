@@ -25,7 +25,8 @@ const ogImage = Astro.site ? new URL('/og.png', Astro.site).toString() : '/og.pn
     <meta name="theme-color" content="#176b9e" />
 
     <link rel="canonical" href={canonical} />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon-64.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 
     {/* Open Graph */}
     <meta property="og:type" content="website" />
