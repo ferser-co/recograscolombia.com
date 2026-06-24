@@ -10,6 +10,7 @@ import Authorization from '../templates/servicios/Authorization.astro';
 import CtaBand from '../templates/servicios/CtaBand.astro';
 import Contact from '../templates/servicios/Contact.astro';
 import Footer from '../templates/servicios/Footer.astro';
+import FloatingCta from '../templates/servicios/FloatingCta.astro';
 import { data } from '../templates/servicios/data';
 
 const title = `${data.brand.name} — ${data.brand.tagline}`;
@@ -65,11 +66,12 @@ const jsonLd = {
   <Nav data={data} />
   <Hero data={data} />
   <Services data={data} />
-  <Philosophy data={data} />
   <About data={data} />
   <Certification data={data} />
   <Authorization data={data} />
+  <Philosophy data={data} />
   <CtaBand data={data} />
   <Contact data={data} />
   <Footer data={data} />
+  <FloatingCta data={data} />
 </Layout>

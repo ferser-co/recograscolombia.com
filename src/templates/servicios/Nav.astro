@@ -17,7 +17,7 @@ const { data } = Astro.props;
         <Logo />
       </a>
 
-      <div class="hidden md:flex items-center gap-7">
+      <div class="hidden lg:flex items-center gap-6">
         {data.nav.map((item) => (
           <a href={item.href} class="text-sm font-semibold text-slate-600 hover:text-brand-700 transition-colors">
             {item.label}
@@ -25,16 +25,68 @@ const { data } = Astro.props;
         ))}
       </div>
 
+      <div class="flex items-center gap-2">
+        {data.navCta && (
+          <a
+            href={data.navCta.href}
+            class="hidden sm:inline-flex items-center gap-1.5 rounded-lg bg-brand-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-brand-700 transition-colors"
+          >
+            <Icon name="message-circle" class="w-4 h-4" />
+            {data.navCta.label}
+          </a>
+        )}
+        <button
+          type="button"
+          id="menu-btn"
+          aria-label="Abrir menú"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          class="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-lg text-slate-700 hover:bg-slate-100 transition-colors"
+        >
+          <Icon name="menu" class="menu-open w-6 h-6" />
+          <Icon name="x" class="menu-close hidden w-6 h-6" />
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div id="mobile-menu" class="lg:hidden hidden border-t border-slate-200/60 bg-white/95 backdrop-blur-xl">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 py-4 flex flex-col gap-1">
+      {data.nav.map((item) => (
+        <a href={item.href} class="rounded-lg px-3 py-2.5 text-base font-semibold text-slate-700 hover:bg-brand-50 hover:text-brand-700 transition-colors" data-menu-link>
+          {item.label}
+        </a>
+      ))}
       {data.navCta && (
         <a
           href={data.navCta.href}
-          class="inline-flex items-center gap-1.5 rounded-lg bg-brand-600 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-brand-700 transition-colors"
+          class="mt-2 inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-4 py-3 text-base font-semibold text-white hover:bg-brand-700 transition-colors"
+          data-menu-link
         >
-          <Icon name="message-circle" class="w-3.5 h-3.5" />
-          <span class="hidden sm:inline">{data.navCta.label}</span>
-          <span class="sm:hidden">Solicitar</span>
+          <Icon name="message-circle" class="w-5 h-5" />
+          {data.navCta.label}
         </a>
       )}
     </div>
-  </nav>
+  </div>
 </header>
+
+<script is:inline>
+  (function () {
+    var btn = document.getElementById('menu-btn');
+    var menu = document.getElementById('mobile-menu');
+    if (!btn || !menu) return;
+    function setOpen(open) {
+      menu.classList.toggle('hidden', !open);
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      btn.querySelector('.menu-open').classList.toggle('hidden', open);
+      btn.querySelector('.menu-close').classList.toggle('hidden', !open);
+    }
+    btn.addEventListener('click', function () {
+      setOpen(menu.classList.contains('hidden'));
+    });
+    menu.querySelectorAll('[data-menu-link]').forEach(function (a) {
+      a.addEventListener('click', function () { setOpen(false); });
+    });
+  })();
+</script>
