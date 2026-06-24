@@ -1,0 +1,56 @@
+---
+import type { ServiciosData } from './data';
+
+import Icon from '../../components/Icon.astro';
+interface Props {
+  data: ServiciosData;
+}
+
+const { data } = Astro.props;
+const { philosophy } = data;
+---
+
+<section id="filosofia" class="py-20 sm:py-28 bg-brand-50/40">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl mb-12 reveal">
+      <p class="mb-3 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-brand-700">
+        <span class="h-px w-8 bg-brand-700"></span>
+        {philosophy.eyebrow}
+      </p>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-900">
+        {philosophy.title}
+      </h2>
+    </div>
+
+    {/* Misión y visión */}
+    <div class="grid md:grid-cols-2 gap-5 mb-14">
+      <div class="reveal rounded-2xl bg-white border border-brand-100 p-7 sm:p-8">
+        <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center mb-5">
+          <Icon name={philosophy.mission.icon} class="w-6 h-6" />
+        </div>
+        <h3 class="text-xl font-bold text-slate-900 mb-3">{philosophy.mission.title}</h3>
+        <p class="text-base text-slate-600 leading-relaxed">{philosophy.mission.text}</p>
+      </div>
+      <div class="reveal rounded-2xl bg-white border border-brand-100 p-7 sm:p-8" style="transition-delay: 80ms;">
+        <div class="w-12 h-12 rounded-xl bg-gold-100 text-gold-600 flex items-center justify-center mb-5">
+          <Icon name={philosophy.vision.icon} class="w-6 h-6" />
+        </div>
+        <h3 class="text-xl font-bold text-slate-900 mb-3">{philosophy.vision.title}</h3>
+        <p class="text-base text-slate-600 leading-relaxed">{philosophy.vision.text}</p>
+      </div>
+    </div>
+
+    {/* Valores */}
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-9">
+      {philosophy.values.map((value, i) => (
+        <div class="reveal" style={`transition-delay: ${i * 60}ms;`}>
+          <div class="w-11 h-11 rounded-lg bg-brand-600 text-white flex items-center justify-center mb-4">
+            <Icon name={value.icon} class="w-5 h-5" />
+          </div>
+          <h3 class="text-base font-bold text-slate-900 mb-1.5">{value.title}</h3>
+          <p class="text-sm text-slate-600 leading-relaxed">{value.description}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

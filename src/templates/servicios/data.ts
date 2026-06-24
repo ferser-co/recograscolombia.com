@@ -18,6 +18,12 @@ export interface BenefitItem {
   description: string;
 }
 
+export interface ValueItem {
+  icon: string;
+  title: string;
+  description: string;
+}
+
 export interface ServiciosData {
   brand: BrandConfig;
   nav: NavItem[];
@@ -39,6 +45,13 @@ export interface ServiciosData {
     title: string;
     paragraphs: string[];
     pillars: PillarItem[];
+  };
+  philosophy: {
+    eyebrow: string;
+    title: string;
+    mission: { icon: string; title: string; text: string };
+    vision: { icon: string; title: string; text: string };
+    values: ValueItem[];
   };
   certification: {
     eyebrow: string;
@@ -161,6 +174,46 @@ export const data: ServiciosData = {
         title: 'Respaldamos tu cumplimiento',
         description:
           'Entregamos certificados de disposición final que soportan tu gestión ante la entidad ambiental.',
+      },
+    ],
+  },
+  philosophy: {
+    eyebrow: 'Quiénes somos',
+    title: 'Misión, visión y valores',
+    mission: {
+      icon: 'target',
+      title: 'Nuestra misión',
+      text: 'Ser el aliado estratégico en soluciones integrales de recolección y logística de aceites de cocina usados, garantizando excelencia operativa, eficiencia y un compromiso inquebrantable con el cuidado del medio ambiente, generando valor compartido para nuestros clientes y el desarrollo sostenible de nuestra comunidad.',
+    },
+    vision: {
+      icon: 'telescope',
+      title: 'Nuestra visión',
+      text: 'Consolidarnos para el año 2030 como la empresa líder en la gestión logística de residuos orgánicos en la Costa Caribe, siendo reconocidos por nuestra innovación, calidad de servicio y nuestra contribución directa a la preservación del ecosistema regional.',
+    },
+    values: [
+      {
+        icon: 'sprout',
+        title: 'Responsabilidad ambiental',
+        description:
+          'Nuestra razón de ser es transformar residuos en recursos, evitando la contaminación de fuentes hídricas y suelos.',
+      },
+      {
+        icon: 'gauge',
+        title: 'Eficiencia logística',
+        description:
+          'Optimizamos cada trayecto y proceso de recolección para ofrecer puntualidad, seguridad y orden en nuestras entregas y recogidas.',
+      },
+      {
+        icon: 'handshake',
+        title: 'Transparencia y confianza',
+        description:
+          'Construimos relaciones duraderas basadas en la honestidad, el cumplimiento de la normativa y la claridad en nuestros procesos.',
+      },
+      {
+        icon: 'users',
+        title: 'Compromiso con el aliado',
+        description:
+          'Entendemos las necesidades de nuestros clientes y actuamos como un socio que facilita su operación diaria.',
       },
     ],
   },
