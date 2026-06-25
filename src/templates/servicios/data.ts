@@ -112,8 +112,8 @@ export const data: ServiciosData = {
   },
   nav: [
     { label: 'Servicios', href: '#servicios' },
-    { label: 'Por qué reciclar', href: '#reciclaje' },
     { label: 'Certificación', href: '#certificacion' },
+    { label: 'Por qué reciclar', href: '#reciclaje' },
     { label: 'Nosotros', href: '#filosofia' },
     { label: 'Contacto', href: '#contacto' },
   ],

@@ -52,3 +52,28 @@ body {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Botón flotante de WhatsApp: vuela desde el hero y se colapsa a solo ícono */
+.floating-cta {
+  transition: opacity 0.3s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.floating-cta .fab-text {
+  max-width: 0;
+  opacity: 0;
+  padding-right: 0;
+  white-space: nowrap;
+  transition: max-width 0.35s ease, opacity 0.25s ease, padding-right 0.35s ease;
+}
+.floating-cta.fab-open .fab-text,
+.floating-cta:hover .fab-text,
+.floating-cta:focus-visible .fab-text {
+  max-width: 16rem;
+  opacity: 1;
+  padding-right: 1.35rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  .floating-cta,
+  .floating-cta .fab-text {
+    transition: opacity 0.2s ease;
+  }
+}
