@@ -53,27 +53,40 @@ body {
   transform: translateY(0);
 }
 
-/* Botón flotante de WhatsApp: vuela desde el hero y se colapsa a solo ícono */
-.floating-cta {
-  transition: opacity 0.3s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+/* Botón flotante de WhatsApp: vuela entre el hero y la esquina, se colapsa a solo ícono y pulsa */
+#fab-wrap {
+  transition: opacity 0.3s ease, transform 0.6s cubic-bezier(0.5, 0, 0.2, 1);
 }
-.floating-cta .fab-text {
+#fab-wrap.fab-instant,
+#fab-wrap.fab-instant .fab-text {
+  transition: none !important;
+}
+#fab-wrap .fab-text {
   max-width: 0;
   opacity: 0;
-  padding-right: 0;
+  padding-left: 0;
   white-space: nowrap;
-  transition: max-width 0.35s ease, opacity 0.25s ease, padding-right 0.35s ease;
+  overflow: hidden;
+  transition: max-width 0.35s ease, opacity 0.25s ease, padding-left 0.35s ease;
 }
-.floating-cta.fab-open .fab-text,
-.floating-cta:hover .fab-text,
-.floating-cta:focus-visible .fab-text {
+#fab-wrap.fab-open .fab-text,
+#fab-wrap:hover .fab-text,
+#fab-wrap:focus-within .fab-text {
   max-width: 16rem;
   opacity: 1;
-  padding-right: 1.35rem;
+  padding-left: 1.35rem;
+}
+#fab-wrap.fab-open .fab-ping,
+#fab-wrap:hover .fab-ping,
+#fab-wrap:focus-within .fab-ping {
+  animation: none;
+  opacity: 0;
 }
 @media (prefers-reduced-motion: reduce) {
-  .floating-cta,
-  .floating-cta .fab-text {
+  #fab-wrap {
     transition: opacity 0.2s ease;
+  }
+  #fab-wrap .fab-ping {
+    display: none;
   }
 }

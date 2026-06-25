@@ -37,15 +37,15 @@ const { data } = Astro.props;
           <a
             id="hero-cta"
             href={data.hero.primaryCta.href}
-            class="inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-7 py-4 text-base font-semibold text-white shadow-lg shadow-brand-600/25 hover:bg-brand-700 hover:shadow-xl hover:shadow-brand-600/30 transition-all"
+            class="inline-flex items-center justify-center gap-2 rounded-full bg-brand-600 px-7 py-4 text-base font-semibold text-white shadow-lg shadow-brand-600/25 hover:bg-brand-700 hover:shadow-xl hover:shadow-brand-600/30 transition-all"
           >
-            <Icon name="message-circle" class="w-5 h-5" />
             {data.hero.primaryCta.label}
+            <Icon name="message-circle" class="w-5 h-5" />
           </a>
           {data.hero.secondaryCta && (
             <a
               href={data.hero.secondaryCta.href}
-              class="inline-flex items-center justify-center gap-2 rounded-lg border-2 border-slate-200 bg-white px-7 py-4 text-base font-semibold text-slate-700 hover:border-brand-300 hover:bg-brand-50 transition-all"
+              class="inline-flex items-center justify-center gap-2 rounded-full border-2 border-slate-200 bg-white px-7 py-4 text-base font-semibold text-slate-700 hover:border-brand-300 hover:bg-brand-50 transition-all"
             >
               {data.hero.secondaryCta.label}
             </a>
