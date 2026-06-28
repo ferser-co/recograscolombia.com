@@ -20,13 +20,15 @@ interface Props {
 const { name, class: className, size, strokeWidth, ariaLabel } = Astro.props;
 
 const here = path.dirname(fileURLToPath(import.meta.url));
-const iconPath = path.resolve(here, '../../node_modules/lucide-static/icons', `${name}.svg`);
+// Iconos propios (src/icons) tienen prioridad; si no, se usa lucide-static.
+const localPath = path.resolve(process.cwd(), 'src/icons', `${name}.svg`);
+const lucidePath = path.resolve(here, '../../node_modules/lucide-static/icons', `${name}.svg`);
 
 let svg = '';
 try {
-  svg = fs.readFileSync(iconPath, 'utf-8');
+  svg = fs.readFileSync(fs.existsSync(localPath) ? localPath : lucidePath, 'utf-8');
 } catch (e) {
-  console.warn(`[Icon] '${name}' no existe en lucide-static`);
+  console.warn(`[Icon] '${name}' no existe en src/icons ni en lucide-static`);
 }
 
 if (svg) {

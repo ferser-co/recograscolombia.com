@@ -1,7 +1,7 @@
 ---
-import type { ServiciosData } from './data';
+import type { ServiciosData } from '../data/site';
 
-import Icon from '../../components/Icon.astro';
+import Icon from './Icon.astro';
 interface Props {
   data: ServiciosData;
 }
@@ -12,13 +12,24 @@ const { authorization } = data;
 
 <section id="autorizacion" class="pt-4 pb-16 sm:pb-20 bg-brand-50/40">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-    <div class="reveal rounded-2xl border border-slate-200 bg-white shadow-sm p-7 sm:p-10">
-      <div class="grid lg:grid-cols-[auto_1fr_auto] gap-7 lg:gap-10 items-center">
-        <div class="shrink-0 w-16 h-16 rounded-2xl bg-brand-600 text-white flex items-center justify-center">
-          <Icon name="shield-check" class="w-8 h-8" />
+    <div class="reveal overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div class="grid lg:grid-cols-[260px_1fr_auto] items-stretch">
+        <!-- Columna del logo -->
+        <div class="flex flex-col items-center justify-center gap-4 bg-brand-50/70 px-8 py-10 lg:border-r border-b lg:border-b-0 border-slate-200">
+          <img
+            src="/img/logo-epa.svg"
+            alt="Logo del Establecimiento Público Ambiental (EPA-Cartagena), organismo emisor del certificado"
+            class="w-44 h-auto sm:w-48"
+            width="192"
+            height="192"
+          />
+          <span class="rounded-full bg-white px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-brand-700 ring-1 ring-brand-100">
+            Autoridad ambiental
+          </span>
         </div>
 
-        <div class="min-w-0">
+        <!-- Contenido -->
+        <div class="min-w-0 px-7 py-8 sm:px-9 sm:py-10">
           <p class="mb-2 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-brand-700">
             <span class="h-px w-8 bg-brand-700"></span>
             {authorization.eyebrow}
@@ -39,7 +50,8 @@ const { authorization } = data;
           </ul>
         </div>
 
-        <div class="flex flex-col gap-3 shrink-0 lg:w-56">
+        <!-- Acciones -->
+        <div class="flex flex-col justify-center gap-3 shrink-0 px-7 py-8 sm:px-9 lg:w-64 lg:border-l border-t lg:border-t-0 border-slate-100">
           <a
             href={authorization.pdfUrl}
             download

@@ -1,0 +1,244 @@
+---
+import type { ServiciosData } from "../data/site";
+import Icon from "./Icon.astro";
+
+interface Props {
+  data: ServiciosData;
+}
+
+const { data } = Astro.props;
+
+// Tono por paso del proceso (recorre la paleta de la marca)
+const tones = [
+  "bg-teal-50 text-teal-600 ring-teal-100",
+  "bg-emerald-50 text-emerald-600 ring-emerald-100",
+  "bg-gold-100 text-gold-600 ring-gold-200",
+  "bg-brand-50 text-brand-600 ring-brand-100",
+  "bg-emerald-50 text-emerald-600 ring-emerald-100",
+];
+
+// --- Geometría de la "sonrisa" (curva cóncava hacia arriba, solo escritorio) ---
+// Bézier cuadrática: P0 (esquina izq) -> P1 (control inferior) -> P2 (esquina der)
+const steps = data.about.steps;
+const n = steps.length;
+const VB_W = 100;
+const VB_H = 46;
+const P0 = { x: 13, y: 14 };
+const P1 = { x: 50, y: 46 };
+const P2 = { x: 87, y: 14 };
+
+const bezier = (t: number) => ({
+  x: (1 - t) ** 2 * P0.x + 2 * (1 - t) * t * P1.x + t ** 2 * P2.x,
+  y: (1 - t) ** 2 * P0.y + 2 * (1 - t) * t * P1.y + t ** 2 * P2.y,
+});
+const tangentDeg = (t: number) => {
+  const dx = 2 * (1 - t) * (P1.x - P0.x) + 2 * t * (P2.x - P1.x);
+  const dy = 2 * (1 - t) * (P1.y - P0.y) + 2 * t * (P2.y - P1.y);
+  return (Math.atan2(dy, dx) * 180) / Math.PI;
+};
+
+// Pasos ubicados sobre la curva
+const nodes = steps.map((s, i) => {
+  const t = n > 1 ? i / (n - 1) : 0.5;
+  const p = bezier(t);
+  return {
+    ...s,
+    num: i + 1,
+    leftPct: (p.x / VB_W) * 100,
+    topPct: (p.y / VB_H) * 100,
+  };
+});
+
+// Flechas (chevrons) entre cada par de pasos, orientadas según la tangente
+const chevrons = Array.from({ length: Math.max(n - 1, 0) }, (_, j) => {
+  const t = (j + 0.5) / (n - 1);
+  const p = bezier(t);
+  return { x: p.x, y: p.y, angle: tangentDeg(t) };
+});
+
+const smilePath = `M ${P0.x} ${P0.y} Q ${P1.x} ${P1.y} ${P2.x} ${P2.y}`;
+// Relleno suave bajo la sonrisa (la "boca")
+const smileFill = `${smilePath} L ${P2.x} ${VB_H} L ${P0.x} ${VB_H} Z`;
+---
+
+<section
+  id="reciclaje"
+  class="relative overflow-hidden py-20 sm:py-28 bg-gradient-to-br from-brand-50 via-emerald-50/50 to-teal-50/70"
+>
+  <!-- Decoración de fondo a todo el ancho de la pantalla -->
+  <span
+    class="pointer-events-none absolute -left-32 -top-16 h-[38rem] w-[38rem] rounded-full bg-emerald-200/30 blur-3xl"
+  ></span>
+  <span
+    class="pointer-events-none absolute -right-32 -bottom-24 h-[36rem] w-[36rem] rounded-full bg-brand-200/30 blur-3xl"
+  ></span>
+  <span
+    class="pointer-events-none absolute left-1/2 top-1/2 h-[26rem] w-[26rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/50 blur-3xl"
+  ></span>
+  <Icon
+    name="recycle"
+    class="pointer-events-none absolute -bottom-16 right-[8%] h-72 w-72 text-brand-500/5"
+  />
+
+  <div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <!-- Encabezado -->
+    <div class="reveal mx-auto max-w-2xl text-center">
+      <p
+        class="mb-3 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-brand-700"
+      >
+        <span class="h-px w-8 bg-brand-700"></span>
+        {data.about.eyebrow}
+        <span class="h-px w-8 bg-brand-700"></span>
+      </p>
+      <h2
+        class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-900 text-balance"
+      >
+        {data.about.title}
+      </h2>
+      <p
+        class="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed text-pretty"
+      >
+        {data.about.subtitle}
+      </p>
+    </div>
+
+    <!-- ===== Proceso en "sonrisa" (escritorio) ===== -->
+    <div class="reveal relative mx-auto mt-14 hidden w-full max-w-5xl lg:block">
+      <div class="relative px-8 pb-16 pt-10">
+        <div class="relative w-full" style={`aspect-ratio: ${VB_W} / ${VB_H};`}>
+          <!-- Línea sonrisa + relleno + flechas -->
+          <svg
+            viewBox={`0 0 ${VB_W} ${VB_H}`}
+            class="absolute inset-0 h-full w-full"
+            fill="none"
+            aria-hidden="true"
+            style="overflow: visible;"
+          >
+            <path
+              d={smilePath}
+              class="text-brand-300"
+              stroke="currentColor"
+              stroke-width="1.1"
+              stroke-linecap="round"></path>
+            {
+              chevrons.map((c) => (
+                <path
+                  d="M -1.4 -2 L 0.9 0 L -1.4 2"
+                  class="text-brand-500"
+                  stroke="currentColor"
+                  stroke-width="0.9"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  transform={`translate(${c.x.toFixed(2)} ${c.y.toFixed(2)}) rotate(${c.angle.toFixed(2)})`}
+                />
+              ))
+            }
+          </svg>
+
+          <!-- Emblema central: el planeta feliz -->
+          <div
+            class="absolute left-1/2 top-[26%] flex w-44 -translate-x-1/2 -translate-y-1/2 flex-col items-center text-center"
+          >
+            <div
+              class="flex h-16 w-16 items-center justify-center rounded-full bg-white text-emerald-600 shadow-sm ring-1 ring-emerald-100"
+            >
+              <Icon name="smile" class="h-8 w-8" />
+            </div>
+            <p
+              class="mt-2 text-sm font-extrabold tracking-tight text-slate-800"
+            >
+              Un planeta más feliz
+            </p>
+            <p class="text-xs leading-snug text-slate-500">
+              Cada gota cuenta para el ambiente
+            </p>
+          </div>
+
+          <!-- Pasos sobre la curva -->
+          {
+            nodes.map((node, i) => (
+              <div
+                class="absolute w-40 -translate-x-1/2 text-center"
+                style={`left:${node.leftPct.toFixed(2)}%; top:${node.topPct.toFixed(2)}%; transition-delay:${i * 80}ms;`}
+              >
+                <div
+                  class={`relative mx-auto -mt-7 flex h-14 w-14 items-center justify-center rounded-2xl bg-white shadow-sm ring-1 ${tones[i % tones.length]}`}
+                >
+                  <span class="absolute -right-2 -top-2 inline-flex h-6 w-6 items-center justify-center rounded-full bg-brand-600 text-[11px] font-black text-white ring-2 ring-white">
+                    {node.num}
+                  </span>
+                  <Icon name={node.icon} class="h-6 w-6" />
+                </div>
+                <h3 class="mt-3 text-sm font-bold text-slate-900">
+                  {node.title}
+                </h3>
+                <p class="mt-1 text-xs leading-relaxed text-slate-600 text-pretty">
+                  {node.description}
+                </p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Proceso apilado (móvil / tablet) ===== -->
+    <ol class="mt-12 flex flex-col items-stretch gap-0 lg:hidden">
+      {
+        steps.map((step, i) => (
+          <>
+            <li class="reveal" style={`transition-delay: ${i * 70}ms;`}>
+              <div class="flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5">
+                <div
+                  class={`relative flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ring-1 ${tones[i % tones.length]}`}
+                >
+                  <span class="absolute -right-2 -top-2 inline-flex h-5 w-5 items-center justify-center rounded-full bg-brand-600 text-[10px] font-black text-white ring-2 ring-white">
+                    {i + 1}
+                  </span>
+                  <Icon name={step.icon} class="h-6 w-6" />
+                </div>
+                <div>
+                  <h3 class="text-base font-bold text-slate-900">
+                    {step.title}
+                  </h3>
+                  <p class="mt-1 text-sm leading-relaxed text-slate-600 text-pretty">
+                    {step.description}
+                  </p>
+                </div>
+              </div>
+            </li>
+            {i < steps.length - 1 && (
+              <li
+                aria-hidden="true"
+                class="flex justify-center py-1.5 text-brand-400"
+              >
+                <svg
+                  class="h-5 w-5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M12 5v14" />
+                  <path d="m6 13 6 6 6-6" />
+                </svg>
+              </li>
+            )}
+          </>
+        ))
+      }
+    </ol>
+
+    <!-- Cierre -->
+    <div class="reveal mt-10 flex justify-center lg:mt-8">
+      <p
+        class="inline-flex items-center gap-2.5 rounded-full border border-emerald-200 bg-emerald-50 px-5 py-2.5 text-sm font-semibold text-emerald-700"
+      >
+        <Icon name="smile" class="h-5 w-5" />
+        {data.about.cycleNote}
+      </p>
+    </div>
+  </div>
+</section>

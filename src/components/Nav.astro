@@ -1,7 +1,7 @@
 ---
-import type { ServiciosData } from './data';
+import type { ServiciosData } from '../data/site';
 
-import Icon from '../../components/Icon.astro';
+import Icon from './Icon.astro';
 import Logo from './Logo.astro';
 interface Props {
   data: ServiciosData;
@@ -17,9 +17,9 @@ const { data } = Astro.props;
         <Logo />
       </a>
 
-      <div class="hidden lg:flex items-center gap-6">
+      <div class="hidden xl:flex items-center gap-6">
         {data.nav.map((item) => (
-          <a href={item.href} class="text-sm font-semibold text-slate-600 hover:text-brand-700 transition-colors">
+          <a href={item.href} class="whitespace-nowrap text-sm font-semibold text-slate-600 hover:text-brand-700 transition-colors">
             {item.label}
           </a>
         ))}
@@ -41,7 +41,7 @@ const { data } = Astro.props;
           aria-label="Abrir menú"
           aria-expanded="false"
           aria-controls="mobile-menu"
-          class="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-lg text-slate-700 hover:bg-slate-100 transition-colors"
+          class="xl:hidden inline-flex h-10 w-10 items-center justify-center rounded-lg text-slate-700 hover:bg-slate-100 transition-colors"
         >
           <Icon name="menu" class="menu-open w-6 h-6" />
           <Icon name="x" class="menu-close hidden w-6 h-6" />
@@ -50,7 +50,7 @@ const { data } = Astro.props;
     </div>
   </nav>
 
-  <div id="mobile-menu" class="lg:hidden hidden border-t border-slate-200/60 bg-white/95 backdrop-blur-xl">
+  <div id="mobile-menu" class="xl:hidden hidden border-t border-slate-200/60 bg-white/95 backdrop-blur-xl">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 py-4 flex flex-col gap-1">
       {data.nav.map((item) => (
         <a href={item.href} class="rounded-lg px-3 py-2.5 text-base font-semibold text-slate-700 hover:bg-brand-50 hover:text-brand-700 transition-colors" data-menu-link>

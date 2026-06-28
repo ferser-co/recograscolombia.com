@@ -1,0 +1,110 @@
+---
+import type { ServiciosData } from '../data/site';
+
+import Icon from './Icon.astro';
+interface Props {
+  data: ServiciosData;
+}
+
+const { data } = Astro.props;
+---
+
+<section id="top" class="relative overflow-hidden pt-32 pb-20 sm:pt-40 sm:pb-28">
+  {/* Fondo y motivos de marca */}
+  <div class="absolute inset-0 -z-10 bg-gradient-to-br from-brand-50 via-white to-gold-50/50"></div>
+  <div class="absolute top-20 right-[-100px] -z-10 w-[500px] h-[500px] rounded-full bg-brand-100/50 blur-3xl"></div>
+  <div class="absolute bottom-[-100px] left-[-50px] -z-10 w-[400px] h-[400px] rounded-full bg-gold-100/50 blur-3xl"></div>
+  <Icon name="earth" class="absolute -z-10 top-24 left-[-60px] w-72 h-72 text-teal-600/10" />
+  <Icon name="recycle" class="absolute -z-10 bottom-10 right-10 w-40 h-40 text-gold-500/10 hidden lg:block" />
+
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="grid lg:grid-cols-[1.2fr_1fr] gap-12 lg:gap-16 items-center">
+      <div>
+        <p class="mb-5 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-brand-700">
+          <span class="h-px w-8 bg-brand-700"></span>
+          {data.hero.eyebrow}
+        </p>
+
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.05] tracking-tight text-slate-900 mb-6">
+          {data.hero.title}
+        </h1>
+
+        <p class="text-lg sm:text-xl text-slate-600 leading-relaxed mb-6 max-w-xl">
+          {data.hero.subtitle}
+        </p>
+
+        {data.hero.badge && (
+          <p class="mb-8 inline-flex items-center gap-2 rounded-full bg-white/70 px-4 py-2 text-sm font-bold text-brand-800 shadow-sm ring-1 ring-brand-100 backdrop-blur">
+            <Icon name="zap" class="h-4 w-4 text-gold-500" />
+            {data.hero.badge}
+          </p>
+        )}
+
+        <div class="flex flex-col sm:flex-row gap-3">
+          <a
+            id="hero-cta"
+            href={data.hero.primaryCta.href}
+            class="inline-flex items-center justify-center gap-2 rounded-full bg-brand-600 px-7 py-4 text-base font-semibold text-white shadow-lg shadow-brand-600/25 hover:bg-brand-700 hover:shadow-xl hover:shadow-brand-600/30 transition-all"
+          >
+            {data.hero.primaryCta.label}
+            <Icon name="message-circle" class="w-5 h-5" />
+          </a>
+          {data.hero.secondaryCta && (
+            <a
+              href={data.hero.secondaryCta.href}
+              class="inline-flex items-center justify-center gap-2 rounded-full border-2 border-slate-200 bg-white px-7 py-4 text-base font-semibold text-slate-700 hover:border-brand-300 hover:bg-brand-50 transition-all"
+            >
+              {data.hero.secondaryCta.label}
+            </a>
+          )}
+        </div>
+      </div>
+
+      <div class="reveal hidden lg:block" style="transition-delay: 150ms;">
+        <div class="relative mx-auto w-[300px] xl:w-[330px]">
+          {/* Pila de certificados reales */}
+          <img
+            src="/img/certificado.webp"
+            alt=""
+            aria-hidden="true"
+            width="760"
+            height="1075"
+            class="absolute left-0 top-0 h-auto w-full rounded-xl shadow-xl ring-1 ring-slate-900/5 rotate-[-7deg] translate-x-[-22px] translate-y-3"
+            loading="lazy"
+            decoding="async"
+          />
+          <img
+            src="/img/certificado.webp"
+            alt=""
+            aria-hidden="true"
+            width="760"
+            height="1075"
+            class="absolute left-0 top-0 h-auto w-full rounded-xl shadow-xl ring-1 ring-slate-900/5 rotate-[4deg] translate-x-[18px] translate-y-1.5"
+            loading="lazy"
+            decoding="async"
+          />
+          <img
+            src="/img/certificado.webp"
+            alt="Certificado de recolección de aceite usado emitido por Recogras"
+            width="760"
+            height="1075"
+            class="relative h-auto w-full rounded-xl shadow-2xl ring-1 ring-slate-900/10 rotate-[-1.5deg]"
+            loading="lazy"
+            decoding="async"
+          />
+
+          {/* Acento Economía circular */}
+          <div class="absolute -bottom-5 -left-7 rotate-[-4deg] rounded-2xl bg-gold-500 p-4 shadow-xl">
+            <div class="flex items-center gap-2">
+              <Icon name="recycle" class="h-7 w-7 text-brand-900" />
+              <div>
+                <p class="text-base font-black leading-none text-brand-900">Economía</p>
+                <p class="text-base font-black leading-none text-brand-900">circular</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

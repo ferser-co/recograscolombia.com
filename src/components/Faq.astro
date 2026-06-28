@@ -1,0 +1,45 @@
+---
+import type { ServiciosData } from '../data/site';
+
+import Icon from './Icon.astro';
+interface Props {
+  data: ServiciosData;
+}
+
+const { data } = Astro.props;
+const { faq } = data;
+---
+
+<section id="faq" class="py-20 sm:py-28 bg-white">
+  <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+    <div class="reveal mb-12 text-center">
+      <p class="mb-3 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-brand-700">
+        <span class="h-px w-8 bg-brand-700"></span>
+        {faq.eyebrow}
+        <span class="h-px w-8 bg-brand-700"></span>
+      </p>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-900">
+        {faq.title}
+      </h2>
+      <p class="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed">{faq.subtitle}</p>
+    </div>
+
+    <div class="reveal space-y-3">
+      {
+        faq.items.map((item) => (
+          <details class="group rounded-2xl border border-slate-200 bg-white transition-shadow open:shadow-md open:shadow-brand-900/5">
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 [&::-webkit-details-marker]:hidden">
+              <span class="text-base font-bold text-slate-900">{item.q}</span>
+              <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-600 transition-transform group-open:rotate-180">
+                <Icon name="chevron-down" class="h-5 w-5" />
+              </span>
+            </summary>
+            <div class="-mt-1 px-6 pb-5">
+              <p class="text-sm sm:text-base leading-relaxed text-slate-600">{item.a}</p>
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

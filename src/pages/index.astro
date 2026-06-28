@@ -1,28 +1,33 @@
 ---
-import Layout from '../templates/servicios/Layout.astro';
-import Nav from '../templates/servicios/Nav.astro';
-import Hero from '../templates/servicios/Hero.astro';
-import Services from '../templates/servicios/Services.astro';
-import Philosophy from '../templates/servicios/Philosophy.astro';
-import About from '../templates/servicios/About.astro';
-import Certification from '../templates/servicios/Certification.astro';
-import Authorization from '../templates/servicios/Authorization.astro';
-import CtaBand from '../templates/servicios/CtaBand.astro';
-import Contact from '../templates/servicios/Contact.astro';
-import Footer from '../templates/servicios/Footer.astro';
-import FloatingCta from '../templates/servicios/FloatingCta.astro';
-import { data } from '../templates/servicios/data';
+import Layout from "../layouts/Layout.astro";
+import Nav from "../components/Nav.astro";
+import Hero from "../components/Hero.astro";
+import Services from "../components/Services.astro";
+import Philosophy from "../components/Philosophy.astro";
+import About from "../components/About.astro";
+import Certification from "../components/Certification.astro";
+import Authorization from "../components/Authorization.astro";
+import Faq from "../components/Faq.astro";
+import CtaBand from "../components/CtaBand.astro";
+import Contact from "../components/Contact.astro";
+import Footer from "../components/Footer.astro";
+import FloatingCta from "../components/FloatingCta.astro";
+import { data } from "../data/site";
 
 const title = `${data.brand.name} — ${data.brand.tagline}`;
-const description = data.hero.subtitle;
+const description = data.seo.description;
 const phone = data.contact.phone ?? data.contact.whatsapp;
-const ogImage = Astro.site ? new URL('/og.png', Astro.site).toString() : '/og.png';
-const siteUrl = Astro.site ? Astro.site.toString() : 'https://recograscolombia.com';
+const ogImage = Astro.site
+  ? new URL("/og.png", Astro.site).toString()
+  : "/og.png";
+const siteUrl = Astro.site
+  ? Astro.site.toString()
+  : "https://recograscolombia.com";
 
 const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'LocalBusiness',
-  '@id': `${siteUrl}#business`,
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": `${siteUrl}#business`,
   name: data.brand.name,
   description: data.footer.description,
   slogan: data.hero.title,
@@ -31,37 +36,82 @@ const jsonLd = {
   email: data.contact.email,
   telephone: phone,
   address: {
-    '@type': 'PostalAddress',
+    "@type": "PostalAddress",
     streetAddress: data.contact.address,
-    addressLocality: 'Cartagena de Indias',
-    addressRegion: 'Bolívar',
-    addressCountry: 'CO',
+    addressLocality: "Cartagena de Indias",
+    addressRegion: "Bolívar",
+    addressCountry: "CO",
   },
   geo: {
-    '@type': 'GeoCoordinates',
+    "@type": "GeoCoordinates",
     latitude: data.contact.geo.lat,
     longitude: data.contact.geo.lng,
   },
   hasMap: data.contact.mapUrl,
-  areaServed: { '@type': 'AdministrativeArea', name: 'Bolívar, Colombia' },
+  areaServed: { "@type": "AdministrativeArea", name: "Bolívar, Colombia" },
   knowsAbout: [
-    'Recolección de aceite de cocina usado',
-    'Recolección de trampa grasa',
-    'Certificado de disposición final',
-    'Economía circular',
+    "Recolección de aceite de cocina usado",
+    "Recolección de trampa grasa",
+    "Certificado de disposición final",
+    "Economía circular",
   ],
+  hasOfferCatalog: {
+    "@type": "OfferCatalog",
+    name: "Servicios de Recogras",
+    itemListElement: data.services.items.map((s) => ({
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: s.title,
+        description: s.description,
+        areaServed: {
+          "@type": "AdministrativeArea",
+          name: "Bolívar, Colombia",
+        },
+        provider: { "@id": `${siteUrl}#business` },
+      },
+    })),
+  },
+};
+
+const faqLd = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: data.faq.items.map((item) => ({
+    "@type": "Question",
+    name: item.q,
+    acceptedAnswer: { "@type": "Answer", text: item.a },
+  })),
 };
 ---
 
 <Layout title={title} description={description}>
   <Fragment slot="head">
-    <meta name="keywords" content="recolección de aceite usado, aceite de cocina usado, trampa grasa, lodo graso, certificado de disposición final, Cartagena, economía circular, gestión de residuos" />
+    <meta
+      name="keywords"
+      content="recolección de aceite usado, aceite de cocina usado, trampa grasa, lodo graso, certificado de disposición final, Cartagena, economía circular, gestión de residuos"
+    />
     <meta name="author" content="Recogras" />
     <meta name="geo.region" content="CO-BOL" />
     <meta name="geo.placename" content="Cartagena de Indias" />
-    <meta name="geo.position" content={`${data.contact.geo.lat};${data.contact.geo.lng}`} />
-    <meta name="ICBM" content={`${data.contact.geo.lat}, ${data.contact.geo.lng}`} />
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
+    <meta
+      name="geo.position"
+      content={`${data.contact.geo.lat};${data.contact.geo.lng}`}
+    />
+    <meta
+      name="ICBM"
+      content={`${data.contact.geo.lat}, ${data.contact.geo.lng}`}
+    />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(jsonLd)}
+      is:inline
+    />
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(faqLd)}
+      is:inline
+    />
   </Fragment>
   <Nav data={data} />
   <Hero data={data} />
@@ -70,6 +120,7 @@ const jsonLd = {
   <About data={data} />
   <Philosophy data={data} />
   <Authorization data={data} />
+  <Faq data={data} />
   <CtaBand data={data} />
   <Contact data={data} />
   <Footer data={data} />

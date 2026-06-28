@@ -9,7 +9,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "gen:og": "node scripts/gen-og.mjs"
+    "gen:og": "node scripts/gen-og.mjs",
+    "deploy": "npm run build && scp -P 65002 -i C:\\Users\\SurivZ\\.ssh\\recogras_key -r .\\dist\\* u364252665@92.112.189.211:~/domains/recograscolombia.com/public_html/"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.2.1",

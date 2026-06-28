@@ -1,0 +1,54 @@
+---
+import type { ServiciosData } from "../data/site";
+
+import Icon from "./Icon.astro";
+interface Props {
+  data: ServiciosData;
+}
+
+const { data } = Astro.props;
+---
+
+<section id="certificacion" class="py-20 sm:py-28 bg-slate-50">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="max-w-3xl mb-14 reveal">
+      <p
+        class="mb-3 inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.18em] text-brand-700"
+      >
+        <span class="h-px w-8 bg-brand-700"></span>
+        {data.certification.eyebrow}
+      </p>
+      <h2
+        class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-slate-900 mb-4"
+      >
+        {data.certification.title}
+      </h2>
+      <p class="text-base sm:text-lg text-slate-600">
+        {data.certification.subtitle}
+      </p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      {
+        data.certification.benefits.map((benefit, i) => (
+          <div
+            class="reveal flex items-start gap-4 p-6 rounded-2xl bg-brand-50/60 border border-brand-100"
+            style={`transition-delay: ${i * 60}ms;`}
+          >
+            <div class="shrink-0 w-11 h-11 rounded-xl bg-brand-600 text-white flex items-center justify-center">
+              <Icon name={benefit.icon} class="w-5 h-5" />
+            </div>
+            <div class="min-w-0">
+              <h3 class="text-base font-bold text-slate-900 mb-1">
+                {benefit.title}
+              </h3>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                {benefit.description}
+              </p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
